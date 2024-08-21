@@ -28,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={[styles.loginButton, { backgroundColor: '#06a8cf' }]}
+                    <TouchableOpacity style={[styles.loginButton, { backgroundColor: '#393185' }]}
                      onPress={() => navigation.navigate('Signup')}
                     >
                         <Text style={[styles.buttonText]}>Sign Up</Text>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     loginButton: {
-        backgroundColor: '#fb7d02',
+        backgroundColor: '#4CAF50',
         padding: 17,
         borderRadius: 9,
     },

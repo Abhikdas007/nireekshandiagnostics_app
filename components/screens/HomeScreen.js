@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useState } from 'react';
 import logo from '../../assets/login-bg.jpg';
+import styles from '../../style';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -43,44 +44,4 @@ const HomeScreen = ({ navigation }) => {
 }
 
 
-const styles = StyleSheet.create({
-    imageContainer: {
-        marginBottom: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loginHeading: {
-        fontSize: 27,
-        color: '#000',
-        fontWeight: 'bold',
-    },
-    image: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    logoImage: {
-        width: 400,
-        height: 100,
-        marginBottom: 20,
-    },
-
-
-    buttonContainer: {
-        width: '85%',
-        marginTop: 9,
-    },
-    buttonText: {
-        fontSize: 20,
-        color: '#fff',
-        textAlign: 'center',
-        fontWeight: 'bold',
-    },
-    loginButton: {
-        backgroundColor: '#4CAF50',
-        padding: 17,
-        borderRadius: 9,
-    },
-
-});
 export default HomeScreen

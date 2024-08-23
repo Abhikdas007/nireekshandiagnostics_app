@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { 
-    View, 
-    Text, 
-    StyleSheet, 
-    ImageBackground, 
-    TextInput, 
-    TouchableOpacity, 
-    KeyboardAvoidingView, 
-    Platform, 
-    TouchableWithoutFeedback, 
-    Keyboard 
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    TextInput,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard,
+    PermissionsAndroid,
+    Alert
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import logo from '../../assets/login-bg.jpg';
@@ -19,10 +21,38 @@ const Dashboard = () => {
     const [patientName, setPatientName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
+    const [locationGranted, setLocationGranted] = useState(false);
     const [location, setLocation] = useState({ latitude: null, longitude: null });
 
     useEffect(() => {
-        // Request for location permission and get the current location
+        requestLocationPermission();
+    }, []);
+
+    const requestLocationPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: "Location Permission",
+                    message: "This app needs access to your location to autofill your address",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                setLocationGranted(true);
+                getCurrentLocation();
+            } else {
+                setLocationGranted(false);
+                Alert.alert("Location permission denied", "You can still enter your address manually.");
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
+
+    const getCurrentLocation = () => {
         Geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
@@ -30,18 +60,19 @@ const Dashboard = () => {
                 setAddress(`Lat: ${latitude}, Lng: ${longitude}`);
             },
             (error) => {
-                console.warn(error.code, error.message);
+                console.log(error.code, error.message);
+                Alert.alert("Error", "Unable to fetch location. Please enter your address manually.");
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
-    }, []);
+    };
 
     const handleSubmit = () => {
         // Handle the form submission logic here
-        console.warn('Patient Name:', patientName);
-        console.warn('Phone Number:', phoneNumber);
-        console.warn('Address:', address);
-        console.warn('Location:', location);
+        console.log('Patient Name:', patientName);
+        console.log('Phone Number:', phoneNumber);
+        console.log('Address:', address);
+        console.log('Location:', location);
     };
 
     return (
@@ -81,10 +112,11 @@ const Dashboard = () => {
                             style={[styles.textInputStyle, { height: 200, textAlignVertical: 'top' }]}
                             multiline={true}
                             numberOfLines={10}
-                            placeholder="Address"
+                            placeholder={locationGranted ? "Fetching your location..." : "Enter your address"}
                             placeholderTextColor="#999"
                             value={address}
                             onChangeText={setAddress}
+                            editable={!locationGranted || (locationGranted && address.includes("Lat"))}
                         />
                     </View>
 

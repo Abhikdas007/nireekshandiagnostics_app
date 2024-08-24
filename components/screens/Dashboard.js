@@ -28,6 +28,8 @@ const Dashboard = () => {
         requestLocationPermission();
     }, []);
 
+    //Permission access
+
     const requestLocationPermission = async () => {
         try {
             const granted = await PermissionsAndroid.request(
@@ -52,6 +54,8 @@ const Dashboard = () => {
         }
     };
 
+    // Called Geo Location
+
     const getCurrentLocation = () => {
         Geolocation.getCurrentPosition(
             (position) => {
@@ -67,8 +71,9 @@ const Dashboard = () => {
         );
     };
 
+
+    // Form Handels
     const handleSubmit = () => {
-        // Handle the form submission logic here
         console.log('Patient Name:', patientName);
         console.log('Phone Number:', phoneNumber);
         console.log('Address:', address);

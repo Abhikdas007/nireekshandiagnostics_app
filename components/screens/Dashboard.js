@@ -65,7 +65,7 @@ const Dashboard = () => {
             },
             (error) => {
                 console.log(error.code, error.message);
-                Alert.alert("Error", "Unable to fetch location. Please enter your address manually.");
+                // Alert.alert("Error", "Unable to fetch location. Please enter your address manually.");
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
@@ -74,10 +74,10 @@ const Dashboard = () => {
 
     // Form Handels
     const handleSubmit = () => {
-        console.log('Patient Name:', patientName);
-        console.log('Phone Number:', phoneNumber);
-        console.log('Address:', address);
-        console.log('Location:', location);
+        // console.log('Patient Name:', patientName);
+        // console.log('Phone Number:', phoneNumber);
+        // console.log('Address:', address);
+        // console.log('Location:', location);
     };
 
     return (
